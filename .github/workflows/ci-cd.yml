@@ -26,7 +26,7 @@ jobs:
 
       # Conditionally skip tests based on an environment variable
       - name: Run Tests
-        if: ${{ secrets.SKIP_TESTS != 'true' }}  # Skip tests if SKIP_TESTS secret is set to 'true'
+        if: ${{ env.SKIP_TESTS != 'true' }}  # Skip tests if SKIP_TESTS secret is set to 'true'
         run: |
           . venv/bin/activate
           python -m unittest discover -s tests
