@@ -24,12 +24,12 @@ jobs:
           . venv/bin/activate
           pip install -r requirements.txt
 
-      # Conditionally skip tests based on an environment variable
       - name: Run Tests
-        if: ${{ env.SKIP_TESTS != 'true' }}  # Skip tests if SKIP_TESTS secret is set to 'true'
+        if: ${{ env.SKIP_TESTS != 'true' }}  # Check the SKIP_TESTS environment variable
         run: |
           . venv/bin/activate
-          python -m unittest discover -s tests
+          # Ensure tests is importable by specifying the correct directory path
+          python -m unittest discover -s tests -p "*.py"  # Use correct path and pattern
 
   docker-build-push:
     needs: build
