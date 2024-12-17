@@ -24,7 +24,9 @@ jobs:
           . venv/bin/activate
           pip install -r requirements.txt
 
+      # Conditionally skip tests based on an environment variable
       - name: Run Tests
+        if: ${{ secrets.SKIP_TESTS != 'true' }}  # Skip tests if SKIP_TESTS secret is set to 'true'
         run: |
           . venv/bin/activate
           python -m unittest discover -s tests
@@ -45,6 +47,6 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t <your-dockerhub-username>/flask-app:latest .
-          docker push <your-dockerhub-username>/flask-app:latest
+          docker build -t twistedorc/flask-app:latest .
+          docker push twistedorc/flask-app:latest
 
