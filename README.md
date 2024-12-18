@@ -1,68 +1,46 @@
 CI/CD Pipeline Demo
-This repository demonstrates a CI/CD pipeline using GitHub Actions to build, test, and deploy a simple application.
-Setup Instructions
+This repository demonstrates a CI/CD pipeline using GitHub Actions to build, test, and deploy a Python application.
+
 Prerequisites
-Before setting up the CI/CD pipeline, ensure that the following tools are installed:
-- Docker (https://www.docker.com/get-started)
-- Python 3.8+ (https://www.python.org/downloads/)
-- GitHub CLI (optional, for managing GitHub Actions locally)
-Clone the Repository
-Clone the repository to your local machine:
-```bash
-git clone https://github.com/your-username/ci-cd-pipeline-demo.git
-cd ci-cd-pipeline-demo
-```
-Setting Up Virtual Environment
-1. Create a virtual environment:
-```bash
-python3 -m venv venv
-```
+Before setting up, ensure the following tools are installed:
 
-2. Activate the virtual environment:
-  - On Linux `source venv/bin/activate`
-  
+Docker: Get Started
+Python 3.8+: Download
+(Optional) GitHub CLI: For managing Actions locally
 
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+Setup
+Clone the repo:
+git clone https://github.com/your-username/ci-cd-pipeline-demo.git  
+cd ci-cd-pipeline-demo  
+
+Set up a virtual environment:
+python3 -m venv venv  
+source venv/bin/activate  # For Linux  
+pip install -r requirements.txt  
+
 Running Tests Locally
-To run the tests locally, use the following command:
-```bash
-python -m unittest discover -s tests -p "*.py"
-```
-CI/CD Pipeline with GitHub Actions
-The GitHub Actions CI/CD pipeline is defined in the `.github/workflows/ci-cd.yml` file. The pipeline will:
-1. Build the application.
-2. Run tests (only if the `SKIP_TESTS` secret is not set to `true`).
-3. Build and push the Docker image to DockerHub.
+Run tests with:
+python -m unittest discover -s tests -p "*.py"  
+
 GitHub Actions Workflow
-The CI/CD pipeline is triggered on a `push` to the `main` branch.
+The CI/CD pipeline is defined in .github/workflows/ci-cd.yml and triggers on pushes to the main branch. Key steps:
 
-### Workflow Breakdown:
-- **Checkout code**: The first step checks out the repository code.
-- **Set up Python**: The second step sets up Python 3.8.
-- **Install dependencies**: The pipeline installs dependencies using `pip`.
-- **Run tests**: If `SKIP_TESTS` secret is not set to `true`, it runs the tests.
-- **Docker build and push**: Finally, the pipeline logs in to DockerHub, builds the Docker image, and pushes it to the DockerHub repository.
-Secrets Required for GitHub Actions
-To run the workflow, you need to set the following secrets in your GitHub repository:
-- `DOCKER_USERNAME`: Your DockerHub username.
-- `DOCKER_PASSWORD`: Your DockerHub password.
-- `SKIP_TESTS`: Set this to `'true'` if you want to skip the tests during the pipeline execution (default is `'false'`).
-Example Docker Commands
-If you need to manually build and push the Docker image, you can use the following commands:
-```bash
-docker build -t <your-dockerhub-username>/flask-app:latest .
-docker push <your-dockerhub-username>/flask-app:latest
-```
+Checkout Code: Pulls the latest repo code.
+Setup Python: Configures Python 3.8.
+Install Dependencies: Installs required packages.
+Run Tests: Executes tests unless SKIP_TESTS is set to true.
+Docker Build & Push: Builds and pushes the Docker image to DockerHub.
+Required Secrets
+Set these secrets in your GitHub repo:
+
+DOCKER_USERNAME: DockerHub username
+DOCKER_PASSWORD: DockerHub password
+SKIP_TESTS: Optional, set to true to skip tests
+Docker Commands
+To build and push manually:
+docker build -t <username>/flask-app:latest .  
+docker push <username>/flask-app:latest  
+
 Troubleshooting
-Test Discovery Issues
-If you encounter errors during the test discovery, ensure that:
-- The `tests` directory contains an `__init__.py` file. This allows Python to recognize the directory as a package.
-- Your test files follow the `*.py` pattern.
-
-To run tests manually, use the command:
-```bash
-python -m unittest discover -s tests -p "*.py"
-```
+Ensure tests/ contains __init__.py for Python to recognize it as a package.
+Test files should match the *.py pattern.
